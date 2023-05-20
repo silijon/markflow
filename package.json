@@ -1,6 +1,6 @@
 {
   "name": "markflow",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Watches a markdown file for changes and updates those changes to HTML in a browser.",
   "main": "app.js",
   "bin": {
