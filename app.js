@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-var browserSync = require('browser-sync');
+const process = require('process');
+const fs = require('fs');
+const browserSync = require('browser-sync');
 
-var argv = require('minimist')(process.argv.slice(2));
-var myFile = argv.f || argv.file;
+// set current working directory to the current file's directory
+process.chdir(__dirname);
 
+// get the file to watch from the command line
+const argv = require('minimist')(process.argv.slice(2));
+const myFile = argv.f || argv.file;
+
+// start browserSync
 browserSync({
-    server: 'markflow',
+    server: './markflow',
     ui: false,
     files: [myFile],
     middleware: [
