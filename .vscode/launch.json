@@ -12,7 +12,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/app.js",
-            "args": [ "-f", "/home/john/Documents/scouts/tiger-tag.md" ]
+            "args": [ "README.md" ]
         }
     ]
 }
