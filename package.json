@@ -1,0 +1,30 @@
+{
+  "name": "markflow",
+  "version": "1.0.0",
+  "description": "Watches a markdown file for changes and updates those changes to HTML in a browser.",
+  "main": "app.js",
+  "bin": {
+    "markflow": "./app.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/silijon/markflow.git"
+  },
+  "keywords": [
+    "markdown",
+    "browser-sync"
+  ],
+  "author": "John Dennis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silijon/markflow/issues"
+  },
+  "homepage": "https://github.com/silijon/markflow#readme",
+  "dependencies": {
+    "browser-sync": "^2.29.3",
+    "minimist": "^1.2.8"
+  }
+}
