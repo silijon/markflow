@@ -1,31 +1,65 @@
 #!/usr/bin/env node
 
-const process = require('process');
-const path = require('path');
-const fs = require('fs');
-const browserSync = require('browser-sync');
+import path from 'path';
+import {fileURLToPath} from 'url';
+import meow from 'meow';
+import process from 'process';
+import fs from 'fs';
+import browserSync from 'browser-sync';
 
-// get the file to watch from the command line
-const argv = require('minimist')(process.argv.slice(2));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// resolve absolute path from myFile
-const mdFileAbs = path.resolve(argv._[0]);
-console.log(mdFileAbs);
+const cli = meow(`
+    Usage   
+        $ markflow <markdown-file>
+
+    Options
+        --help, -h  Show this help
+        --port, -p  Port to use for the server
+
+    Example
+        $ markflow README.md
+`, {    
+    importMeta: import.meta,
+    flags: {
+        help: {
+            shortFlag: 'h'
+        },
+        port: {
+            shortFlag: 'p',
+            type: 'number',
+            default: 3000
+        }
+    }
+});
+
+// if there is no markdown file given, show help
+if (!cli.input.length) {
+    cli.showHelp();
+}
+
+// resolve absolute path from given markdown file
+const mdFileAbs = path.resolve(cli.input.at(0));
 
 // set current working directory to the current file's directory
 process.chdir(__dirname);
 
 // start browserSync
 browserSync({
-    server: './markflow',
+    server: 'markflow',
+    port: cli.flags.port,
     ui: false,
     files: [mdFileAbs],
     middleware: [
         {
             route: '/markdown',
             handle: function (req, res, next) {
-                res.setHeader('Content-Type', 'text/plain');
-                res.end(fs.readFileSync(mdFileAbs));
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({
+                    location: mdFileAbs,
+                    text: fs.readFileSync(mdFileAbs).toString()
+                }));
                 next();
             }
         }

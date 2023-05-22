@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Browsersync Server Example</title>
+    <title>Markflow</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-dark.min.css'>
     <style>
         .markdown-body {
@@ -22,10 +22,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
     <script>
         fetch('/markdown')
-            .then(response => response.text())
-            .then(text => {
+            .then(response => response.json())
+            .then(md => {
+                document.title = md.location;
                 const converter = new showdown.Converter();
-                const html = converter.makeHtml(text);
+                const html = converter.makeHtml(md.text);
                 document.body.innerHTML += html;
             });
     </script>

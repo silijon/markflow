@@ -2,7 +2,8 @@
   "name": "markflow",
   "version": "0.0.1",
   "description": "Watches a markdown file for changes and updates those changes to HTML in a browser.",
-  "main": "app.js",
+  "type": "module",
+  "exports": "./app.js",
   "bin": {
     "markflow": "./app.js"
   },
@@ -25,6 +26,6 @@
   "homepage": "https://github.com/silijon/markflow#readme",
   "dependencies": {
     "browser-sync": "^2.29.3",
-    "minimist": "^1.2.8"
+    "meow": "^12.0.1"
   }
 }
