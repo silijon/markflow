@@ -4,6 +4,12 @@
   "description": "Watches a markdown file for changes and updates those changes to HTML in a browser.",
   "type": "module",
   "exports": "./app.js",
+  "files": [
+    "**/*.js",
+    "**/*.html",
+    "**/*.css",
+    "**/*.md"
+  ],
   "bin": {
     "markflow": "./app.js"
   },
