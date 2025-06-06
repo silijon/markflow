@@ -1,6 +1,6 @@
 {
   "name": "markflow",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Watches a markdown file for changes and updates those changes to HTML in a browser.",
   "type": "module",
   "exports": "./app.js",
