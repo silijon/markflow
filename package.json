@@ -11,7 +11,7 @@
     "**/*.md"
   ],
   "bin": {
-    "markflow": "./app.js"
+    "markflow": "app.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
