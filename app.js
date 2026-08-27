@@ -15,8 +15,9 @@ const cli = meow(`
         $ markflow <markdown-file>
 
     Options
-        --help, -h  Show this help
-        --port, -p  Port to use for the server
+        --help, -h   Show this help
+        --port, -p   Port to use for the server
+        --watch, -w  Keep watching the file and sync changes to the browser
 
     Example
         $ markflow README.md
@@ -30,6 +31,11 @@ const cli = meow(`
             shortFlag: 'p',
             type: 'number',
             default: 3000
+        },
+        watch: {
+            shortFlag: 'w',
+            type: 'boolean',
+            default: false
         }
     }
 });
@@ -45,12 +51,17 @@ const mdFileAbs = path.resolve(cli.input.at(0));
 // set current working directory to the current file's directory
 process.chdir(__dirname);
 
+const watch = cli.flags.watch;
+
 // start browserSync
-browserSync({
+const bs = browserSync({
     server: 'markflow',
     port: cli.flags.port,
     ui: false,
-    files: [mdFileAbs],
+    files: watch ? [mdFileAbs] : [],
+    logSnippet: watch,
+    notify: watch,
+    ghostMode: watch,
     middleware: [
         {
             route: '/markdown',
@@ -64,4 +75,13 @@ browserSync({
             }
         }
     ]
+}, () => {
+    if (!watch) {
+        // give the browser a moment to load the page and fetch the markdown
+        // before tearing down the server and exiting
+        setTimeout(() => {
+            bs.exit();
+            process.exit(0);
+        }, 1500);
+    }
 });

@@ -1,10 +1,10 @@
 # Markflow
 
-A lightweight, real-time Markdown preview tool that watches your Markdown files and automatically updates the rendered HTML in your browser as you edit.
+A lightweight Markdown preview tool that opens a rendered view of your Markdown file in the browser, with an optional live-updating mode that watches the file and automatically refreshes as you edit.
 
 ## Features
 
-- **Live Preview**: Automatically refreshes browser view when you save changes to your Markdown file
+- **Live Preview**: Optionally refreshes browser view when you save changes to your Markdown file (with `--watch`)
 - **GitHub Flavored Markdown**: Supports tables, strikethrough text, and other GFM features
 - **Dark Theme**: Uses GitHub's dark markdown CSS for comfortable viewing
 - **Zero Configuration**: Works out of the box with sensible defaults
@@ -38,7 +38,25 @@ markflow README.md
 This will:
 1. Start a local server (default port 3000)
 2. Open your browser with the rendered Markdown
-3. Watch for changes and auto-refresh the browser
+3. Shut down the server and exit once the page has loaded
+
+By default, markflow gives you a one-time snapshot: the browser tab keeps showing what was rendered, but it is no longer connected to the file or the server.
+
+### Watch Mode
+
+To keep the browser in sync with the file as you edit it, pass the `--watch` or `-w` flag:
+
+```bash
+markflow README.md --watch
+# or
+markflow README.md -w
+```
+
+This will:
+1. Start a local server (default port 3000)
+2. Open your browser with the rendered Markdown
+3. Watch the file for changes and auto-refresh the browser
+4. Keep running until you stop it (e.g. with Ctrl+C)
 
 ### Custom Port
 
@@ -48,6 +66,12 @@ You can specify a custom port using the `--port` or `-p` flag:
 markflow README.md --port 8080
 # or
 markflow README.md -p 8080
+```
+
+This can be combined with `--watch`:
+
+```bash
+markflow README.md --watch --port 8080
 ```
 
 ### Help
@@ -65,10 +89,10 @@ markflow -h
 Markflow uses [BrowserSync](https://browsersync.io/) to create a local development server that:
 
 1. Serves a single HTML page with your rendered Markdown content
-2. Watches the specified Markdown file for changes
-3. Automatically refreshes the browser when changes are detected
-4. Uses [Showdown.js](https://github.com/showdownjs/showdown) to convert Markdown to HTML
-5. Applies GitHub's markdown CSS for professional styling
+2. Uses [Showdown.js](https://github.com/showdownjs/showdown) to convert Markdown to HTML
+3. Applies GitHub's markdown CSS for professional styling
+
+By default, the server shuts down shortly after the browser loads the page, so the tab is a static snapshot. When `--watch` is passed, the server instead stays running, watches the Markdown file for changes, and automatically refreshes the browser when changes are detected.
 
 ## Supported Markdown Features
 
@@ -103,6 +127,14 @@ npm install
 3. Link for local development:
 ```bash
 npm link
+```
+
+### Running Without Installing
+
+You can also run markflow directly from the repo root, without linking or installing it globally:
+
+```bash
+node app.js README.md
 ```
 
 ### Project Structure
